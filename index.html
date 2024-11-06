@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>WebSocket Example</title>
+    </head>
+    <body>
+        <h1>WebSocket Example</h1>
+         
+        <form>
+            <label for="message">Message:</label><br />
+            <input type="text" id="message" name="message" /><br />
+            <input type="button" id="sendBtn" value="Send" />
+        </form>
+        
+        <div id="output"></div>
+        
+        <script type="text/javascript">
+            window.onload = function() {
+                // connect to the server
+                let socket = new WebSocket("ws://"+window.location.host+"/ws/echo");
+                socket.onopen = () => socket.send("Client connected!");
+                
+                // send a message to the server
+                var sendButton = document.getElementById("sendBtn");
+                var message = document.getElementById("message");
+
+                // user clicks 'send'
+                sendButton.onclick = () => {
+                    socket.send(message.value);
+                }
+
+                // user presses enter
+                message.onkeypress = (evt) => {
+                   if (evt.keyCode === 13) {
+                       evt.preventDefault();
+                       socket.send(message.value);
+                   }
+                }
+                
+                // print a message from the server
+                socket.onmessage = (evt) => {
+                    var output = document.getElementById("output");
+                    output.innerHTML += `<div>${evt.data}</div>`;
+                }
+            }
+        </script>
+    </body>
+</html>
