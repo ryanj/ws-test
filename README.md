@@ -18,7 +18,7 @@ If secrets are not found, this app will default to http
 ```
 2. Rename the certificates:
 ```
-mv localhost.cert private.crt   
+mv localhost.crt private.crt
 mv localhost.key public.key
 ```
 3. `npm install`

@@ -8,14 +8,12 @@ const port = process.env.PORT || 8080;
 var options = {};
 try{
   options = {
-     key: fs.readFileSync(__dirname + '/private.key', 'utf8'),
-    cert: fs.readFileSync(__dirname + '/public.crt', 'utf8')
+     key: process.env['PRIVATE_KEY'] || fs.readFileSync(__dirname + '/private.key', 'utf8'),
+    cert: process.env['PUBLIC_CRT'] || fs.readFileSync(__dirname + '/public.crt', 'utf8')
   };
   var server = https.createServer(options, app).listen(port);
 } catch (err){
   console.error(err);
-  //const expressWs = require('express-ws')(app);
-  //app.listen(port);
   var server = http.createServer(options, app).listen(port);
 }
 const expressWs = require('express-ws')(app, server);
