@@ -17,7 +17,7 @@
         <script type="text/javascript">
             window.onload = function() {
                 // connect to the server
-                let socket = new WebSocket("ws://"+window.location.host+"/ws/echo");
+                let socket = new WebSocket("/ws/echo");
                 socket.onopen = () => socket.send("Client connected!");
                 
                 // send a message to the server
