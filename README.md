@@ -11,9 +11,11 @@ If secrets are not found, this app will default to http
 
 ## Local Dev
 
-1. Generate a localhost certificate for dev testing:
+1. Generate a [localhost certificate](https://letsencrypt.org/docs/certificates-for-localhost/) for dev testing:
 ```bash
-   openssl req -x509 -out localhost.crt -keyout localhost.key   -newkey rsa:2048 -nodes -sha256   -subj '/CN=localhost' -extensions EXT -config <( \
+openssl req -x509 -out localhost.crt -keyout localhost.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config <( \
    printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
 ```
 2. Rename the certificates:
