@@ -4,8 +4,8 @@ test your websocket interactions on OpenShift
 
 To use https, make sure to mount secrets:
 
- * public.key
- * private.crt 
+ * public.crt 
+ * private.key
 
 If secrets are not found, this app will default to http
 
@@ -20,8 +20,8 @@ openssl req -x509 -out localhost.crt -keyout localhost.key \
 ```
 2. Rename the certificates:
 ```
-mv localhost.crt private.crt
-mv localhost.key public.key
+mv localhost.crt public.crt
+mv localhost.key private.key
 ```
 3. `npm install`
 4. `npm start`
