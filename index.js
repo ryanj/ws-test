@@ -5,21 +5,24 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 8080;
-var options = {};
+var tls = {};
 try{
-  options = {
-     key: process.env['PRIVATE_KEY'] || fs.readFileSync(__dirname + '/private.key', 'utf8'),
-    cert: process.env['PUBLIC_CRT']  || fs.readFileSync(__dirname + '/public.crt',  'utf8')
+  tls = {
+    key: process.env['PRIVATE_KEY'] || fs.readFileSync(__dirname + '/private.key', 'utf8'),
+    cert: process.env['PUBLIC_CRT'] || fs.readFileSync(__dirname + '/public.crt',  'utf8'),
+    maxVersion: 'TLSv1.3',
+    minVersion: 'TLSv1.2'
   };
-  // certificates available
+  // certificates available!
   console.log("protocol: https/wss")
 } catch (err){
   console.error(err);
-  // no certificates, fallback to http
+  // certificates unavailable
+  // fallback to http/ws connections
   console.log("protocol: http/ws")
 }
-const protocol = ( Object.keys(options).length != 0 ) ? https : http;
-const server = protocol.createServer(options, app).listen(port);
+const protocol = ( Object.keys(tls).length != 0 ) ? https : http;
+const server = protocol.createServer(tls, app).listen(port);
 const expressWs = require('express-ws')(app, server);
 
 // Serve web page HTML
